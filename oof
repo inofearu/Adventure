@@ -1,0 +1,5 @@
+strength = str(input('How many points do you want in strength? \n'))
+if strength in str(range(0,stat_points)):
+ strength = int(strength)
+ stat_points = stat_points - strength
+ print('You have',stat_points, 'left')
