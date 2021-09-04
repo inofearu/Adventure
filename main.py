@@ -151,17 +151,18 @@ def secret():
    global stat_points
    stat_points = 0
 
-def dcontinueq():
-  global continueq
+def discard_question():
+  global continue_question
   global stat_points
   print('\nYou still have', stat_points, 'stat points left, if you continue now you will lose them\n Continue? Y/N\n')
-  continueq = input('> ')
-  continueq = continueq.lower()
-  if continueq in ["y","n"]:
-    if continueq in ['y']:
-      print('\nOk, Voiding stat points...\n')
+  continue_question = input('> ')
+  continue_question = continue_question.lower()
+  if continue_question in ["y","n"]:
+    if continue_question in ['y']:
+      print('\nVoiding stat points...\n')
+      print('You may undo this by choosing redo.')
       stat_points = 0
-    if continueq in ['n']:
+    if continue_question in ['n']:
       redo = input('\nRedo stat point allocation? Y/N\n> ')
       redo = redo.lower()
       if redo in ['y','n']:
@@ -169,13 +170,13 @@ def dcontinueq():
           print('redoing...\n')
           stat_point_assign()
         else:
-          dcontinueq()
+          discard_question()
       else:
         print('Answer has to be Y or N\n')
-        dcontinueq()
+        discard_question()
   else:
     print('Answer has to be Y or N\n')
-    dcontinueq()
+    discard_question()
 
 def redocontinuem():
   redocontinue = input('\nRedo or Continue? R/C\n> ')
@@ -192,10 +193,10 @@ def redocontinuem():
 Yes = ["Yes", "yes", "Y", "y", "Sure", "sure", "Ye", "ye"]
 
 # Starting Defines
-gold = 100
-health = 100
-stamina = 100
-stat_points = 30
+player_gold = 100
+player_health = 100
+player_stamina = 100
+dev_stats_assigned = 0
 # Program Start
 def name_selection():
   global name
@@ -230,22 +231,39 @@ def difficulty_setting():
      print('What have you done')
      print(Style.RESET_ALL)
  else: 
-   print("This has to be between 1 and 5, please put a new number in")
+   print("Please input a number between 1 and 5.")
    difficulty_setting()
 difficulty_setting()
 global base_points
 base_points = stat_points
 # dev mode
-if name in ["god","God"]:
-  gold = 99999
-  phealth = 99999
-  pstamina = 99999
-  base_points = 99999
-else: 
-  if name in ["demigod","Demigod"]:
-    Gold = 99999
-    base_points = 99999
+if name in ['Dev','dev']:
+  player_gold = input('Input gold')
+  player_health = input('Input health')
+  player_stamina = input('stamina')
+  base_points = 9999
+  switch = 1
 zeroten = ["0","1","2","3","4","5","6","7","8","9","10"]
+
+  # dev stats
+def devmode_stat_assign():
+     if switch == 1:
+      print('\nMESSAGE- Due to dev mode being active, you can set your stats to anything you want.')
+      global strength
+      global perception
+      global endurance
+      global intelligence
+      global agility
+      global luck
+      strength = int(input('Strength > '))
+      perception = int(input('Perception > '))
+      endurance = int(input('Endurance > '))
+      intelligence = int(input('Intelligence > '))
+      agility = int(input('Agility > '))
+      luck = int(input('Luck > '))
+      global dev_stats_assigned
+      dev_stats_assigned = 1
+
 # initial stat assignment
 def stat_point_assign():
   global strength
@@ -261,6 +279,7 @@ def stat_point_assign():
   if stat_points > base_points:
     stat_points = base_points
   print ('Allocate your stat points!')
+  devmode_stat_assign()
   print('You have', stat_points, 'stat points\n')
   stat_points = int(stat_points)
   # strength
@@ -344,18 +363,9 @@ def stat_point_assign():
   print('Agility -', agility)
   print('Luck -', luck)
   if stat_points > 0:
-    dcontinueq()
+    discard_question()
   redocontinuem()
-  if switch == 1:
-    print('\nMESSAGE- Due to you being in dev mode, you can choose to set all your stats to whatever you wish now but be careful not to input any letters!\n Change stats? Y/N\n')
-    devmodestats = str(input('> '))
-    devmodestats = devmodestats.lower()
-    if devmodestats in ['y','n']:
-      if devmodestats in ['y']:
-        strength = int(input('Strength > '))
-        perception = int(input('Perception > '))
-        endurance = int(input('Endurance > '))
-        intelligence = int(input('Intelligence > '))
-        agility = int(input('Agility > '))
-        luck = int(input('Luck > '))
-stat_point_assign()
+if dev_stats_assigned == 1:
+  print('Dev stats assigned, skipping regular assignment')
+else:
+  stat_point_assign()
