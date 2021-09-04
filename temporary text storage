@@ -5,7 +5,7 @@
 #0.8 x encounter rate
 #1.5x more loot (maybe chance?)
 #50 stat points at start
-#no ending replaced by cake
+#no ending, replaced by cake :)
 
 #Easy:
 #0.8x enemy hp + damage
@@ -36,8 +36,8 @@
 #standard ending
 
 #Soulcrushing
-1.5x enemy damage
-1.25x enemy hp
+2x enemy damage
+1.5x enemy hp
 0.4x gold
 10x encounter 
 0.5x loot
@@ -54,7 +54,7 @@
 -20 stat points to start
 
 
-#Chances:
+#Base Chances:
 #Very Common - Gray
 #40%
 #Common - Brown
