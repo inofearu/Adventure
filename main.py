@@ -1,21 +1,42 @@
 # Modules
 import random
 import time
+import pygame
+pygame.init()
 from colorama import Fore
 from colorama import Style
 from colorama import Back
+
+# Sleep
 def sleep():
     t = random.randint(0, 5)
     time.sleep(t)
-#developer switch
-switch = 0
-# functions and lists
-
-#player level stuff
-player_level = 1
-player_xp = 0
 
 # Difficultys
+
+# Creative Mode
+def creative():
+  #modifiers
+  global enemy_health_modifier
+  enemy_health_modifier = 1
+  global loot_quality 
+  loot_quality = 1
+  global loot_amount
+  loot_amount = 1
+  global drop_chance
+  drop_chance = 1
+  global player_health_modifier
+  player_health_modifier = 1
+  global gold_loot_amount
+  gold_loot_amount = 1
+  global story_cake_end
+  story_cake_end = 0
+  global encounter_rate_modifier
+  encounter_rate_modifier = 1
+  global stat_points
+  stat_points = 0
+  global switch
+  switch = 1
 
 # very easy
 def very_easy():
@@ -196,7 +217,9 @@ Yes = ["Yes", "yes", "Y", "y", "Sure", "sure", "Ye", "ye"]
 player_gold = 100
 player_health = 100
 player_stamina = 100
-dev_stats_assigned = 0
+player_level = 1
+player_xp = 0
+switch = 0
 # Program Start
 def name_selection():
   global name
@@ -212,19 +235,20 @@ difficulty_select()
 def difficulty_setting():
  global difficulty_number
  difficulty_number = str(input("> "))
- if difficulty_number in ["1", "2", "3", "4", "5", "6"]: 
-   difficulty_number = int(difficulty_number)
-   if difficulty_number == 1:
+ if difficulty_number in ["m6S2Esb", "1", "2", "3", "4", "5", "6"]: 
+   if difficulty_number in ['m6S2Esb']:
+     creative()
+   if difficulty_number in ['1']:
      very_easy()
-   if difficulty_number == 2:
+   if difficulty_number in ['2']:
      easy() 
-   if difficulty_number == 3:
+   if difficulty_number in ['3']:
      normal()
-   if difficulty_number == 4:
+   if difficulty_number in ['4']:
      hard()
-   if difficulty_number == 5:
+   if difficulty_number in ['5']:
      soul_crushing()
-   if difficulty_number == 6:
+   if difficulty_number in ['6']:
      secret()
      print(Fore.RED)
      print(Back.BLACK)
@@ -236,36 +260,34 @@ def difficulty_setting():
 difficulty_setting()
 global base_points
 base_points = stat_points
-# dev mode
-if name in ['Dev','dev']:
-  player_gold = input('Input gold')
-  player_health = input('Input health')
-  player_stamina = input('stamina')
-  base_points = 9999
-  switch = 1
 zeroten = ["0","1","2","3","4","5","6","7","8","9","10"]
-
-  # dev stats
-def devmode_stat_assign():
+  # creative stats
+def creativemode_stat_assign():
      if switch == 1:
-      print('\nMESSAGE- Due to dev mode being active, you can set your stats to anything you want.')
+      print('\nMESSAGE- Due to creative mode being active, you can set your stats to anything you want,as well as certain player aspects.')
       global strength
       global perception
       global endurance
       global intelligence
       global agility
       global luck
+      global player_gold
+      global player_health
+      global player_stamina
       strength = int(input('Strength > '))
       perception = int(input('Perception > '))
       endurance = int(input('Endurance > '))
       intelligence = int(input('Intelligence > '))
       agility = int(input('Agility > '))
       luck = int(input('Luck > '))
-      global dev_stats_assigned
-      dev_stats_assigned = 1
+      print()
+      player_gold = input('Starting Gold > ')
+      player_health = input('Input Health > ')
+      player_stamina = input('Input Stamina > ')
 
 # initial stat assignment
 def stat_point_assign():
+  global switch
   global strength
   global perception
   global endurance
@@ -274,87 +296,98 @@ def stat_point_assign():
   global agility
   global luck
   global stat_points
-  if stat_points < base_points:
-    stat_points = base_points
-  if stat_points > base_points:
-    stat_points = base_points
-  print ('Allocate your stat points!')
-  devmode_stat_assign()
-  print('You have', stat_points, 'stat points\n')
-  stat_points = int(stat_points)
-  # strength
-  strength = str(input('How many points do you want in strength? \n'))
-  if strength in zeroten:
-    strength = int(strength)
-    stat_points = stat_points - strength
-    print('You have',stat_points, 'stat points left') 
-  else:
-    print('Please pick a number between 0 and 10\n')
-    stat_points = base_points
-    stat_point_assign()
-  # perception
-  perception = str(input('How many points do you want in perception? \n'))
-  if perception in zeroten:
-    perception = int(perception)
-    stat_points = stat_points - perception
-    print('You have',stat_points, 'stat points left') 
-  else:
-    print('Please pick a number between 0 and 10\n')
-    stat_points = base_points
-    stat_point_assign()
-  # endurance
-  endurance = str(input('How many points do you want in endurance? \n'))
-  if endurance in zeroten:
-    endurance = int(endurance)
-    stat_points = stat_points - endurance
-    print('You have',stat_points, 'stat points left') 
-  else:
-    print('Please pick a number between 0 and 10\n')
-    stat_points = base_points
-    stat_point_assign()
-  # charisma
-  charisma = str(input('How many points do you want in charisma? \n'))
-  if charisma in zeroten:
-    charisma = int(charisma)
-    stat_points = stat_points - charisma
-    print('You have',stat_points, 'stat points left') 
-  else:
-    print('Please pick a number between 0 and 10\n')
-    stat_points = base_points
-    stat_point_assign()
-  # intelligence
-  intelligence = str(input('How many points do you want in intelligence? \n'))
-  if intelligence in zeroten:
-    intelligence = int(intelligence)
-    stat_points = stat_points - intelligence
-    print('You have',stat_points, 'stat points left') 
-  else:
-    print('Please pick a number between 0 and 10\n')
-    stat_points = base_points
-    stat_point_assign()
-  # agility
-  agility = str(input('How many points do you want in agility? \n'))
-  if agility in zeroten:
-    agility = int(agility)
-    stat_points = stat_points - agility
-    print('You have',stat_points, 'stat points left') 
-  else:
-    print('Please pick a number between 0 and 10\n')
-    stat_points = base_points
-    stat_point_assign()
-  # luck
-  luck = str(input('How many points do you want in luck? \n'))
-  if luck in zeroten:
-    luck = int(luck)
-    stat_points = stat_points - luck 
-  else:
-    print('Please pick a number between 0 and 10\n')
-    stat_points = base_points
-    stat_point_assign()
+  if switch == 0:
+   global strength
+   global perception
+   global endurance
+   global charisma
+   global intelligence
+   global agility
+   global luck
+   global stat_points
+   if stat_points < base_points:
+     stat_points = base_points
+   if stat_points > base_points:
+     stat_points = base_points
+   print ('Allocate your stat points!')
+   print('You have', stat_points, 'stat points\n')
+   stat_points = int(stat_points)
+   # strength
+   strength = str(input('How many points do you want in strength? \n'))
+   if strength in zeroten:
+     strength = int(strength)
+     stat_points = stat_points - strength
+     print('You have',stat_points, 'stat points left') 
+   else:
+     print('Please pick a number between 0 and 10\n')
+     stat_points = base_points
+     stat_point_assign()
+   # perception
+   perception = str(input('How many points do you want in perception? \n'))
+   if perception in zeroten:
+     perception = int(perception)
+     stat_points = stat_points - perception
+     print('You have',stat_points, 'stat points left') 
+   else:
+     print('Please pick a number between 0 and 10\n')
+     stat_points = base_points
+     stat_point_assign()
+   # endurance
+   endurance = str(input('How many points do you want in endurance? \n'))
+   if endurance in zeroten:
+     endurance = int(endurance)
+     stat_points = stat_points - endurance
+     print('You have',stat_points, 'stat points left') 
+   else:
+     print('Please pick a number between 0 and 10\n')
+     stat_points = base_points
+     stat_point_assign()
+   # charisma
+   charisma = str(input('How many points do you want in charisma? \n'))
+   if charisma in zeroten:
+     charisma = int(charisma)
+     stat_points = stat_points - charisma
+     print('You have',stat_points, 'stat points left') 
+   else:
+     print('Please pick a number between 0 and 10\n')
+     stat_points = base_points
+     stat_point_assign()
+   # intelligence
+   intelligence = str(input('How many points do you want in intelligence? \n'))
+   if intelligence in zeroten:
+     intelligence = int(intelligence)
+     stat_points = stat_points - intelligence
+     print('You have',stat_points, 'stat points left') 
+   else:
+     print('Please pick a number between 0 and 10\n')
+     stat_points = base_points
+     stat_point_assign()
+   # agility
+   agility = str(input('How many points do you want in agility? \n'))
+   if agility in zeroten:
+     agility = int(agility)
+     stat_points = stat_points - agility
+     print('You have',stat_points, 'stat points left') 
+   else:
+     print('Please pick a number between 0 and 10\n')
+     stat_points = base_points
+     stat_point_assign()
+   # luck
+   luck = str(input('How many points do you want in luck? \n'))
+   if luck in zeroten:
+     luck = int(luck)
+     stat_points = stat_points - luck 
+   else:
+     print('Please pick a number between 0 and 10\n')
+     stat_points = base_points
+     stat_point_assign()
   # stat points below 0 error
-  if stat_points < 0:
-    print('Error, negative stat points. Please redo.')
-    stat_point_assign()
+   if stat_points < 0:
+     print('Error, negative stat points. Please redo.')
+     stat_point_assign()
+  else:
+    creativemode_stat_assign()
+    print()
   print(stat_points, 'stat points left')
   print('Strength -', strength)
   print('Perception -', perception)
@@ -365,7 +398,6 @@ def stat_point_assign():
   if stat_points > 0:
     discard_question()
   redocontinuem()
-if dev_stats_assigned == 1:
-  print('Dev stats assigned, skipping regular assignment')
-else:
-  stat_point_assign()
+stat_point_assign()
+if switch == 1:
+  print('Creative stats assigned, skipping regular assignment...')

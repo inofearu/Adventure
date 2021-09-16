@@ -13,7 +13,7 @@ def randassign():
   if r == 1:
     global strength
     stat_points = stat_points - 1
-      strength = strength + 1
+    strength = strength + 1
   if r == 2:
     global perception
     stat_points = stat_points - 1
@@ -55,7 +55,7 @@ def randassign():
       else:
         print("Voiding points...")
         stat_points = 0
-  if stat_points == 0:
+    if stat_points == 0:
     print(stat_points, 'stat points left')
     print('Strength -', strength)
     print('Perception -', perception)
@@ -63,3 +63,14 @@ def randassign():
     print('Intelligence -', intelligence)
     print('Agility -', agility)
     print('Luck -', luck)
+
+
+dev_stats_assigned = 0
+
+
+global dev_stats_assigned
+      dev_stats_assigned = 1
+
+
+if switch == 1:
+  print('Creative stats assigned, skipping regular assignment')
